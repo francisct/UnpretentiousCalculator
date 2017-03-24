@@ -1,0 +1,31 @@
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.verticalCenter {
+  position: relative;
+  top: 49%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+.atTop {
+  top: 0px; }
+
+.atBottom {
+  bottom: 0px;
+  left: 0px;
+  position: absolute; }
+
+.textCenter {
+  text-align: center; }
+
+.textLeft {
+  text-align: left; }
+
+.textRight {
+  text-align: right; }
+
+.absolutePos {
+  position: absolute; }

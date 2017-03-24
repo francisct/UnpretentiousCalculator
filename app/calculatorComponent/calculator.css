@@ -1,0 +1,223 @@
+.side-padding-xs {
+  padding-left: 5px;
+  padding-right: 5px; }
+
+.side-padding-md {
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.side-padding-xl {
+  padding-left: 40px;
+  padding-right: 40px; }
+
+.no-padding {
+  padding: 0px; }
+
+.padding-xs {
+  padding: 5px; }
+
+.padding-sm {
+  padding: 10px; }
+
+.padding-md {
+  padding: 20px; }
+
+.top-padding-md {
+  padding-top: 20px; }
+
+.top-padding-xs {
+  padding-top: 5px; }
+
+.bottom-padding {
+  padding-bottom: 20px; }
+
+.bottom-padding-sm {
+  padding-bottom: 10px; }
+
+.bottom-padding-xs {
+  padding-bottom: 5px; }
+
+.left-padding-xs {
+  padding-left: 5px; }
+
+.top-bottom-padding-sm {
+  padding-top: 10px;
+  padding-bottom: 10px; }
+
+.top-bottom-padding-xs {
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.top-buffer-sm {
+  margin-top: 10px; }
+
+.no-top-buffer {
+  margin-top: 0px; }
+
+.top-buffer-md {
+  margin-top: 20px; }
+
+.top-buffer-lg {
+  margin-top: 30px; }
+
+.top-buffer-xl {
+  margin-top: 40px; }
+
+.side-buffer-xs-inverse {
+  margin-left: -5px;
+  margin-right: -5px; }
+
+.side-buffer-sm {
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.side-buffer {
+  margin-left: 20px;
+  margin-right: 20px; }
+
+.bottom-buffer-sm {
+  margin-bottom: 10px; }
+
+.bottom-buffer {
+  margin-bottom: 20px; }
+
+.bottom-buffer-xl {
+  margin-bottom: 40px; }
+
+.buffer-sm {
+  margin: 10px; }
+
+.buffer-md {
+  margin: 20px; }
+
+.buffer-xl {
+  margin: 10px; }
+
+.left-buffer-sm {
+  margin-left: 10px; }
+
+.left-buffer-xl {
+  margin-left: 40px; }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.verticalCenter {
+  position: relative;
+  top: 49%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+.atTop {
+  top: 0px; }
+
+.atBottom {
+  bottom: 0px;
+  left: 0px;
+  position: absolute; }
+
+.textCenter {
+  text-align: center; }
+
+.textLeft {
+  text-align: left; }
+
+.textRight {
+  text-align: right; }
+
+.absolutePos {
+  position: absolute; }
+
+.full-height {
+  height: 100%; }
+
+.full-width {
+  width: 100%; }
+
+.auto-width {
+  width: auto; }
+
+.full-height {
+  height: 100%; }
+
+.full-width {
+  width: 100%; }
+
+.auto-width {
+  width: auto; }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.verticalCenter {
+  position: relative;
+  top: 49%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+.atTop {
+  top: 0px; }
+
+.atBottom {
+  bottom: 0px;
+  left: 0px;
+  position: absolute; }
+
+.textCenter {
+  text-align: center; }
+
+.textLeft {
+  text-align: left; }
+
+.textRight {
+  text-align: right; }
+
+.absolutePos {
+  position: absolute; }
+
+html, body {
+  height: 100%; }
+
+#ng-view {
+  width: 100%;
+  height: 100%; }
+
+.md-button {
+  min-width: 1%;
+  min-height: 1%;
+  margin: 0px; }
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px; }
+
+calculator {
+  height: 500px;
+  width: 400px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 5px; }
+  calculator #screenContainer {
+    background-color: #2c3e50;
+    height: 100px;
+    border-radius: 5px 5px 0px 0px; }
+    calculator #screenContainer p {
+      color: white; }
+  calculator #buttonsContainer {
+    background-color: #3498db;
+    height: 400px;
+    border-radius: 0px 0px 5px 5px; }
+    calculator #buttonsContainer .row {
+      height: 72px; }
+      calculator #buttonsContainer .row div {
+        height: 100%; }
+        calculator #buttonsContainer .row div button {
+          height: 100%;
+          background-color: #2980b9; }
+          calculator #buttonsContainer .row div button.operation {
+            background-color: #70b6e5; }

@@ -1,0 +1,68 @@
+@import "variables";
+
+.top-buffer-sm{
+  margin-top:$buffer-sm;
+}
+
+.no-top-buffer{
+  margin-top:0px;
+}
+
+.top-buffer-md{
+  margin-top:$buffer-md;
+}
+.top-buffer-lg{
+  margin-top:$buffer-lg;
+}
+.top-buffer-xl{
+  margin-top:$buffer-xl;
+}
+
+.side-buffer-xs-inverse{
+  margin-left: -$buffer-xs;
+  margin-right: -$buffer-xs;
+}
+
+.side-buffer-sm{
+  margin-left: $buffer-sm;
+  margin-right: $buffer-sm;
+}
+
+.side-buffer{
+  margin-left: $buffer-md;
+  margin-right: $buffer-md;
+}
+
+.bottom-buffer-sm{
+  margin-bottom:$buffer-sm;
+}
+
+.bottom-buffer{
+  margin-bottom:$buffer-md;
+}
+
+.bottom-buffer-xl{
+  margin-bottom:$buffer-xl;
+}
+
+.buffer-sm{
+  margin: $buffer-sm;
+}
+
+
+.buffer-md{
+  margin: $buffer-md;
+}
+
+.buffer-xl{
+  margin: $buffer-sm;
+}
+
+.left-buffer-sm{
+  margin-left:$buffer-sm;
+}
+
+.left-buffer-xl{
+  margin-left:$buffer-xl;
+}
+
