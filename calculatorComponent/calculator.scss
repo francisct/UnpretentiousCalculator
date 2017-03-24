@@ -1,0 +1,62 @@
+@import "../css/base/colors";
+@import "../css/base/paddings";
+@import "../css/base/buffers";
+@import "../css/base/positioning";
+@import "../css/base/sizes";
+@import "../css/base/reset";
+@import "../css/base/variables";
+
+
+$calculator-height: 500px;
+$calculator-width: 400px;
+
+//buttons container height will be of 1/5 no matter what is the calculator size
+$screen-height: $calculator-height * 0.2;
+//buttons container height will be of 4/5 no matter what is the calculator size
+$buttons-container-height: $calculator-height * 0.8;
+//there are a top and a bottom buffer used in the buttonsContainer, therefore the use of 2 * $buffer-md
+$buttons-row-height: ($buttons-container-height - 2 * $buffer-md) * 0.2;
+
+$calculator-border-radius : 5px;
+$flat-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+calculator {
+
+  height: $calculator-height;
+  width: $calculator-width;
+  box-shadow: $flat-shadow;
+  border-radius: $calculator-border-radius;
+
+  #screenContainer {
+    background-color: $screen-color;
+
+    height: $screen-height;
+    border-radius: $calculator-border-radius $calculator-border-radius 0px 0px;
+    p {
+      color: white;
+    }
+  }
+
+  #buttonsContainer {
+    background-color: $buttonsArea-color;
+
+    height: $buttons-container-height;
+    border-radius: 0px 0px $calculator-border-radius $calculator-border-radius;
+    .row {
+      height: $buttons-row-height;
+      div {
+        height: 100%;
+        button {
+          height: 100%;
+          background-color: $button-color;
+          &.operation {
+            background-color: $operation-button-color;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+
