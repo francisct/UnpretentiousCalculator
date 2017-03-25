@@ -1,5 +1,7 @@
 'use strict';
 
+var invalidText = "Input invalid";
+
 angular
     .module('UnpretentiousCalculator', ['angularCSS'])
     .directive('calculator', calculator);
@@ -9,21 +11,18 @@ function calculator() {
     var directive = {
         restrict: 'E',
         scope: {
-            options: '=',
-            controls: '=',
-            allowScrolling: '='
+            test: "="
         },
         templateUrl: "calculatorComponent/calculator.html",
         css: "calculatorComponent/calculator.css",
-        link: link
+        controller: calculatorCtrl
     };
 
     return directive;
 
     ///////////////////////////////////////////
 
-    function link($scope, element, attrs) {
-
+    function calculatorCtrl($scope){
         $scope.parenthesisLeftValue = '(';
         $scope.parenthesisRightValue = ')';
         $scope.clearValue = 'C';
@@ -46,6 +45,7 @@ function calculator() {
 
         $scope.screen = "";
         $scope.operationStack = [];
+
 
         $scope.printToScreen = printToScreen;
         $scope.appendToScreen = appendToScreen;
@@ -83,12 +83,13 @@ function calculator() {
             var lastInput = isolateLastInput();
             if (lastInput) $scope.operationStack.push(lastInput);
 
-            var result = compute(null, 0, $scope.operationStack);
+            $scope.operationStack = enforceOrderOfOperations($scope.operationStack);
+            var result = compute(null, invalidText, $scope.operationStack);
             printToScreen(result);
         }
 
-
         //private
+
         function isolateLastInput() {
 
             var printBeforeLastNumber = $scope.operationStack.join("");
@@ -115,7 +116,7 @@ function calculator() {
                     if (currentNumberOrOperator == $scope.parenthesisLeftValue) {
                         operationStack = replaceParenthesisByItsValue(operationStack);
                         //if no right parenthesis was found
-                        if (!operationStack) return ("Input invalid");
+                        if (!operationStack) return (invalidText);
                         //else a matching parenthesis was found and its value has been replaced inside the operationStack
                         else return compute(pendingOperator, result, operationStack);
                     }
@@ -152,7 +153,7 @@ function calculator() {
                     break;
                 default:
                     clear();
-                    return ("Input invalid");
+                    return (invalidText);
             }
         }
 
@@ -201,5 +202,79 @@ function calculator() {
             return null;
         }
 
+        function enforceOrderOfOperations(operationStack){
+            var oldLength, newLength;
+               //we can enforce order of operations by adding parenthesis
+            for (var i = 0; i < operationStack.length; i++){
+
+                //if multiplication or division found, reiterate until previous operator, then add a parenthesis just after.
+                if (isHighOrderOperator(operationStack[i])){
+
+                    oldLength = operationStack.length;
+                    operationStack = addOpeningParenthesisAfterPreviousOperator(i, operationStack);
+                    newLength = operationStack.length;
+                    i += newLength - oldLength;
+
+                    operationStack = addClosingParenthesisAfterNextNumber(i, operationStack);
+                }
+            }
+
+            return operationStack;
+        }
+
+
+        function addOpeningParenthesisAfterPreviousOperator(i, operationStack){
+            var parenthesisCtr = 0;
+            for (var j = i-1; j >= 0; j--){
+
+                if (isOperator(operationStack[j]) || j == 0){
+                    //if we are at the beginning, push ( in front of the stack
+                    if (j == 0){
+                         operationStack.unshift($scope.parenthesisLeftValue);
+                         break;
+                    }
+                    else if (parenthesisCtr == 0) {
+                        operationStack.splice(j + 1, 0, $scope.parenthesisLeftValue);
+                        break;
+                    }
+                }
+                else if (operationStack[j] == $scope.parenthesisRightValue) parenthesisCtr++;
+                else if (operationStack[j] == $scope.parenthesisLeftValue) parenthesisCtr--;
+            }
+
+            return operationStack;
+        }
+
+        function addClosingParenthesisAfterNextNumber(i, operationStack){
+            var parenthesisCtr = 0;
+            for (var j = i+1; j < operationStack.length; j++){
+                if (isOperator(operationStack[j]) || j == operationStack.length-1){
+                    //if we are at the end,  push ( in the back of the stack
+                    if (j == operationStack.length-1) {
+                        operationStack.push($scope.parenthesisRightValue);
+                        break;
+                    }
+                    else if (parenthesisCtr == 0) {
+                        operationStack.splice(j - 1, 0, $scope.parenthesisRightValue);
+                        break;
+                    }
+                }
+                else if (operationStack[j] == $scope.parenthesisLeftValue) parenthesisCtr++;
+                else if (operationStack[j] == $scope.parenthesisRightValue) parenthesisCtr--;
+            }
+
+            return operationStack;
+        }
+
+        function isHighOrderOperator(current){
+            return (current == $scope.multiplicationValue || current == $scope.divisionValue);
+        }
+
+        function isOperator(current){
+            return (current == $scope.multiplicationValue || current == $scope.divisionValue || current == $scope.additionValue || current == $scope.minusValue);
+        }
+
+
     }
-}
+    }
+
