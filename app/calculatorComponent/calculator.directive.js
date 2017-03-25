@@ -159,7 +159,7 @@ function calculator() {
 
         function replaceParenthesisByItsValue(operationStack) {
 
-            var substack = findNextParenthesis(operationStack);
+            var substack = findMatchingParenthesis(operationStack);
 
             if (substack) {
                 var numberOfObjectsInsideParenthesis = substack.length;
@@ -176,7 +176,9 @@ function calculator() {
             return operationStack
         }
 
-        function findNextParenthesis(operationStack) {
+        function findMatchingParenthesis(operationStack) {
+            //the purpose of parenthesisEncounter variable is to find the matching parenthesis and not just any right parenthesis
+            var parenthesisEncounter = 0;
             for (var i = 0; i < operationStack.length; i++) {
                 if (operationStack[i] == $scope.parenthesisRightValue) {
                     //it means that it was an empty parenthesis : ()
@@ -184,9 +186,16 @@ function calculator() {
                         return null;
                     }
                     else {
-                        var substack = operationStack.slice(0, i);
-                        return substack;
+                        if (parenthesisEncounter == 0) {
+                            var substack = operationStack.slice(0, i);
+                            return substack;
+                        }
+                        else parenthesisEncounter--;
                     }
+                }
+                //if we encounter another left parenthesis
+                else if (operationStack[i] == $scope.parenthesisLeftValue){
+                    parenthesisEncounter++;
                 }
             }
             return null;
