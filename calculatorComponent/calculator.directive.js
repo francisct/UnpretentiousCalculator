@@ -48,6 +48,7 @@ function calculator() {
         $scope.operationStack = [];
 
         $scope.printToScreen = printToScreen;
+        $scope.appendToScreen = appendToScreen;
         $scope.clear = clear;
         $scope.addOperator = addOperator;
         $scope.equal = equal;
@@ -56,6 +57,11 @@ function calculator() {
 
         //public
         function printToScreen(value) {
+            clear();
+            $scope.screen = $scope.screen + value;
+        }
+
+        function appendToScreen(value) {
             $scope.screen = $scope.screen + value;
         }
 
@@ -66,25 +72,24 @@ function calculator() {
 
         function addOperator(operator) {
 
-            var lastNumber = isolateLastNumber();
+            var lastInput = isolateLastInput();
+            if (lastInput) $scope.operationStack.push(lastInput);
 
-            $scope.operationStack.push(lastNumber);
             $scope.operationStack.push(operator);
-            printToScreen(operator);
+            appendToScreen(operator);
         }
 
         function equal() {
-            var lastNumber = isolateLastNumber();
-            $scope.operationStack.push(lastNumber);
+            var lastInput = isolateLastInput();
+            if (lastInput) $scope.operationStack.push(lastInput);
 
-            var result = compute(null, 0);
-            clear();
+            var result = compute(null, 0, $scope.operationStack);
             printToScreen(result);
         }
 
 
         //private
-        function isolateLastNumber() {
+        function isolateLastInput() {
 
             var printBeforeLastNumber = $scope.operationStack.join("");
             var lastNumber = $scope.screen.replace(printBeforeLastNumber, "");
@@ -92,52 +97,100 @@ function calculator() {
             return lastNumber;
         }
 
-        function compute(pendingOperator, result) {
+        function compute(pendingOperator, result, operationStack) {
 
-            if ($scope.operationStack.length == 0) {
+            if (operationStack.length == 0) {
                 return result;
             }
             else {
-                var currentNumber = parseFloat($scope.operationStack[0]);
+                var currentNumberOrOperator = operationStack[0];
+                var currentNumber = parseFloat(currentNumberOrOperator);
+                //remove current item to be able to use recursion
+                operationStack.splice(0, 1);
 
                 //if Nan, then it is an operator
                 if (isNaN(currentNumber)) {
-                    pendingOperator = $scope.operationStack[0];
-                    //remove current item to be able to use recursion
-                    $scope.operationStack.splice(0, 1);
-                    return compute(pendingOperator, result)
-                }
-                else {
-                    //remove current item to be able to use recursion
-                    $scope.operationStack.splice(0, 1);
 
-                    if (pendingOperator) {
-                        switch (pendingOperator) {
-                            case $scope.additionValue:
-                                return compute(null, result + currentNumber);
-                                break;
-                            case $scope.minusValue:
-                                return compute(null, result - currentNumber);
-                                break;
-                            case $scope.multiplicationValue:
-                                return compute(null, result * currentNumber);
-                                break;
-                            case $scope.divisionValue:
-                                return compute(null, result / currentNumber);
-                                break;
-                            default:
-                                clear();
-                                printToScreen("Input invalid");
-                        }
+                    //if the operator found is a parenthesis, we need to evaluate what is inside
+                    if (currentNumberOrOperator == $scope.parenthesisLeftValue) {
+                        operationStack = replaceParenthesisByItsValue(operationStack);
+                        //if no right parenthesis was found
+                        if (!operationStack) return ("Input invalid");
+                        //else a matching parenthesis was found and its value has been replaced inside the operationStack
+                        else return compute(pendingOperator, result, operationStack);
                     }
-                    //this is the initial case. It will only happen once.
                     else {
-                        return compute(null, currentNumber);
+                        pendingOperator = currentNumberOrOperator;
+                        return compute(pendingOperator, result, operationStack)
                     }
                 }
+                //else it is a number
+                else if (pendingOperator) {
+                    return linkStringOperatorToMathematicalOperator(currentNumber, pendingOperator, result, operationStack);
+                }
+                //else this number is the first entered. This is the initial case. It will only happen once.
+                else {
+                    return compute(null, currentNumber, operationStack);
+                }
+
             }
         }
 
+        function linkStringOperatorToMathematicalOperator(currentNumber, pendingOperator, result, operationStack) {
+            switch (pendingOperator) {
+                case $scope.additionValue:
+                    return compute(null, result + currentNumber, operationStack);
+                    break;
+                case $scope.minusValue:
+                    return compute(null, result - currentNumber, operationStack);
+                    break;
+                case $scope.multiplicationValue:
+                    return compute(null, result * currentNumber, operationStack);
+                    break;
+                case $scope.divisionValue:
+                    return compute(null, result / currentNumber, operationStack);
+                    break;
+                default:
+                    clear();
+                    return ("Input invalid");
+            }
+        }
+
+
+        function replaceParenthesisByItsValue(operationStack) {
+
+            var substack = findNextParenthesis(operationStack);
+
+            if (substack) {
+                var numberOfObjectsInsideParenthesis = substack.length;
+                var valueInsideParenthesis = compute(null, 0, substack);
+                //remove content between parenthesis
+                operationStack.splice(0, numberOfObjectsInsideParenthesis);
+                //replace right parenthesis by the value found
+                operationStack[0] = valueInsideParenthesis;
+            }
+            //right parenthesis was not found
+            else {
+                return null;
+            }
+            return operationStack
+        }
+
+        function findNextParenthesis(operationStack) {
+            for (var i = 0; i < operationStack.length; i++) {
+                if (operationStack[i] == $scope.parenthesisRightValue) {
+                    //it means that it was an empty parenthesis : ()
+                    if (i == 0) {
+                        return null;
+                    }
+                    else {
+                        var substack = operationStack.slice(0, i);
+                        return substack;
+                    }
+                }
+            }
+            return null;
+        }
 
     }
 }
