@@ -1,78 +1,80 @@
 
-    <div id="screenContainer" class="full-width padding-md">
-        <p class="verticalCenter textRight side-padding-xs"> 8 + 7 = 7 </p>
+    <div id="screenContainer" class="full-width padding-md box glass">
+        <div id="screen" class="full-width full-height">
+        <p class="verticalCenter textRight side-padding-xs">{{screen}}</p>
+        </div>
     </div>
     <div id="buttonsContainer" class="full-width padding-md">
 
             <div class="row top-bottom-padding-xs">
                     <div class="side-padding-xs col-xs-3">
-                            <md-button class="full-width md-raised md-primary operation">C</md-button>
+                            <md-button ng-click="clear()" class="full-width md-raised md-primary operation">{{clearValue}}</md-button>
                     </div>
                     <div class="side-padding-xs col-xs-3">
-                            <md-button class="full-width md-raised md-primary operation">(</md-button>
+                            <md-button ng-click="addOperator(parenthesisLeftValue)" class="full-width md-raised md-primary operation">{{parenthesisLeftValue}}</md-button>
                     </div>
                     <div class="side-padding-xs col-xs-3 ">
-                            <md-button class="full-width md-raised md-primary operation">)</md-button>
+                            <md-button ng-click="addOperator(parenthesisRightValue)" class="full-width md-raised md-primary operation">{{parenthesisRightValue}}</md-button>
                     </div>
                     <div class="side-padding-xs col-xs-3 ">
-                            <md-button class="full-width md-raised md-primary operation">/</md-button>
+                            <md-button ng-click="addOperator(divisionValue)" class="full-width md-raised md-primary operation">{{divisionValue}}</md-button>
                     </div>
             </div>
 
         <div class="row top-bottom-padding-xs">
             <div class="side-padding-xs col-xs-3">
-                <md-button class="full-width md-raised md-primary">7</md-button>
+                <md-button ng-click="appendToScreen(sevenValue)" class="full-width md-raised md-primary">{{sevenValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3">
-                <md-button class="full-width md-raised md-primary">8</md-button>
+                <md-button ng-click="appendToScreen(eightValue)" class="full-width md-raised md-primary">{{eightValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3 ">
-                <md-button class="full-width md-raised md-primary">9</md-button>
+                <md-button ng-click="appendToScreen(nineValue)" class="full-width md-raised md-primary">{{nineValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3 ">
-                <md-button class="full-width md-raised md-primary operation">x</md-button>
+                <md-button ng-click="addOperator(multiplicationValue)" class="full-width md-raised md-primary operation">{{multiplicationValue}}</md-button>
             </div>
         </div>
 
         <div class="row top-bottom-padding-xs">
             <div class="side-padding-xs col-xs-3">
-                <md-button class="full-width md-raised md-primary">4</md-button>
+                <md-button ng-click="appendToScreen(fourValue)" class="full-width md-raised md-primary">{{fourValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3">
-                <md-button class="full-width md-raised md-primary">5</md-button>
+                <md-button ng-click="appendToScreen(fiveValue)" class="full-width md-raised md-primary">{{fiveValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3 ">
-                <md-button class="full-width md-raised md-primary">6</md-button>
+                <md-button ng-click="appendToScreen(sixValue)" class="full-width md-raised md-primary">{{sixValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3 ">
-                <md-button class="full-width md-raised md-primary operation">-</md-button>
+                <md-button ng-click="addOperator(minusValue)" class="full-width md-raised md-primary operation">{{minusValue}}</md-button>
             </div>
         </div>
 
         <div class="row top-bottom-padding-xs">
             <div class="side-padding-xs col-xs-3">
-                <md-button class="full-width md-raised md-primary">1</md-button>
+                <md-button ng-click="appendToScreen(oneValue)" class="full-width md-raised md-primary">{{oneValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3">
-                <md-button class="full-width md-raised md-primary">2</md-button>
+                <md-button ng-click="appendToScreen(twoValue)" class="full-width md-raised md-primary">{{twoValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3 ">
-                <md-button class="full-width md-raised md-primary">3</md-button>
+                <md-button ng-click="appendToScreen(threeValue)" class="full-width md-raised md-primary">{{threeValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3 ">
-                <md-button class="full-width md-raised md-primary operation">+</md-button>
+                <md-button ng-click="addOperator(additionValue)" class="full-width md-raised md-primary operation">{{additionValue}}</md-button>
             </div>
         </div>
 
         <div class="row top-bottom-padding-xs">
             <div class="side-padding-xs col-xs-3">
-                <md-button class="full-width md-raised md-primary">0</md-button>
+                <md-button ng-click="appendToScreen(zeroValue)" class="full-width md-raised md-primary">{{zeroValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-3">
-                <md-button class="full-width md-raised md-primary">.</md-button>
+                <md-button ng-click="appendToScreen(dotValue)" class="full-width md-raised md-primary">{{dotValue}}</md-button>
             </div>
             <div class="side-padding-xs col-xs-6 ">
-                <md-button class="full-width md-raised md-primary">=</md-button>
+                <md-button ng-click="equal()" class="full-width md-raised md-primary">{{equalValue}}</md-button>
             </div>
         </div>
 

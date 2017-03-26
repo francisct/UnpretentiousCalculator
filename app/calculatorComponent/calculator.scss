@@ -5,6 +5,7 @@
 @import "../css/base/sizes";
 @import "../css/base/reset";
 @import "../css/base/variables";
+@import "../css/fxs/glassEffect";
 
 
 $calculator-height: 500px;
@@ -28,11 +29,16 @@ calculator {
   border-radius: $calculator-border-radius;
 
   #screenContainer {
-    background-color: $screen-color;
-
+    background-color: $screen-padding-color;
     height: $screen-height;
     border-radius: $calculator-border-radius $calculator-border-radius 0px 0px;
+
+    #screen{
+      background-color: $screen-color;
+    }
     p {
+      //having a base height for p fixes the screen position
+      height: 1px;
       color: white;
     }
   }

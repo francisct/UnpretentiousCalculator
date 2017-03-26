@@ -1,5 +1,6 @@
 !.gitkeep
 app/node_modules/
+node_modules/
 app/bower_components/
 .DS_Store
 .idea/
