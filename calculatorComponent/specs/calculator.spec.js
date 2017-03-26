@@ -172,4 +172,37 @@ describe('UnpretentiousCalculator.calculator module', function() {
 
         expect(scope.screen).toEqual((1000 * (1000 + 1000 * (1000 + 1000))).toString());
     });
+
+    it('should handle invalid inputs', function () {
+        el = create();
+        scope = el.isolateScope();
+        scope.appendToScreen(scope.zeroValue);
+        scope.addOperator(scope.multiplicationValue);
+        scope.addOperator(scope.multiplicationValue);
+        scope.appendToScreen(scope.zeroValue);
+        scope.equal();
+
+        expect(scope.screen).toEqual(scope.invalidText);
+
+        el = create();
+        scope = el.isolateScope();
+        scope.appendToScreen(scope.zeroValue);
+        scope.addOperator(scope.parenthesisLeftValue);
+        scope.addOperator(scope.multiplicationValue);
+        scope.appendToScreen(scope.zeroValue);
+        scope.equal();
+
+        expect(scope.screen).toEqual(scope.invalidText);
+
+        el = create();
+        scope = el.isolateScope();
+        scope.appendToScreen(scope.zeroValue);
+        scope.addOperator(scope.multiplicationValue);
+        scope.addOperator(scope.parenthesisRightValue);
+        scope.appendToScreen(scope.zeroValue);
+        scope.equal();
+
+        expect(scope.screen).toEqual(scope.invalidText);
+
+    });
 });
