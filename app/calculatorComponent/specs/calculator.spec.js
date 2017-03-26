@@ -204,5 +204,23 @@ describe('UnpretentiousCalculator.calculator module', function() {
 
         expect(scope.screen).toEqual(scope.invalidText);
 
+        el = create();
+        scope = el.isolateScope();
+        scope.appendToScreen(scope.zeroValue);
+        scope.addOperator(scope.parenthesisLeftValue);
+        scope.appendToScreen(scope.zeroValue);
+        scope.equal();
+
+        expect(scope.screen).toEqual(scope.invalidText);
+
+        el = create();
+        scope = el.isolateScope();
+        scope.appendToScreen(scope.zeroValue);
+        scope.addOperator(scope.parenthesisRightValue);
+        scope.appendToScreen(scope.zeroValue);
+        scope.equal();
+
+        expect(scope.screen).toEqual(scope.invalidText);
+
     });
 });
