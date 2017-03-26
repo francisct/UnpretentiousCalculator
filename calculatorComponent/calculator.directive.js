@@ -127,7 +127,8 @@ function calculatorCtrl($scope, hotkeys) {
                 //(+ or (* or (- or (/ or *) or +) or -) or /)
                 case (current == $scope.parenthesisLeftValue && isOperator(next)) || next == $scope.parenthesisRightValue && isOperator(current):
                     return false;
-
+                case (!isNaN(parseFloat(current)) && next == $scope.parenthesisLeftValue) || (!isNaN(parseFloat(next)) && current == $scope.parenthesisRightValue):
+                    return false;
             }
         }
         return true;
