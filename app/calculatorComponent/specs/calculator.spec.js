@@ -73,7 +73,7 @@ describe('UnpretentiousCalculator.calculator module', function() {
         scope.appendToScreen(scope.zeroValue);
         scope.equal();
 
-        expect(scope.screen).toEqual("Input invalid");
+        expect(scope.screen).toEqual((0/0).toString());
 
         el = create();
         scope = el.isolateScope();

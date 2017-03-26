@@ -24,6 +24,8 @@ module.exports = function(config) {
         {pattern: './app/bower_components/angular-ui-router/release/angular-ui-router.js', watch: false},
         {pattern: './app/bower_components/angular-mocks/angular-mocks.js', watch: false},
         {pattern: './app/bower_components/angular-css/angular-css.js', watch: false},
+        {pattern: './app/bower_components/mousetrap/mousetrap.js', watch: false},
+        {pattern: './app/bower_components/angular-hotkeys/src/hotkeys.js', watch: false},
         './app/calculatorComponent/calculator.directive.js',
         './app/calculatorComponent/specs/calculator.spec.js',
         './app/calculatorComponent/calculator.html'
