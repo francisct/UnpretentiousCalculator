@@ -1,6 +1,5 @@
 'use strict';
 
-var invalidText = "Input invalid";
 
 angular
     .module('UnpretentiousCalculator', ['angularCSS', 'cfp.hotkeys'])
@@ -55,6 +54,7 @@ function calculatorCtrl($scope, hotkeys) {
     $scope.eightValue = '8';
     $scope.nineValue = '9';
     $scope.screen = "";
+    $scope.invalidText = "Input invalid";
     //public functions
     $scope.appendToScreen = appendToScreen;
     $scope.clear = clear;
@@ -65,6 +65,7 @@ function calculatorCtrl($scope, hotkeys) {
     var operationStack = [];
     //private functions:
     var printToScreen;
+    var verifyStackValidity;
     var isolateLastInput;
     var compute;
     var handleNextStackEncounter;
@@ -102,15 +103,34 @@ function calculatorCtrl($scope, hotkeys) {
         var lastInput = isolateLastInput();
         if (lastInput) operationStack.push(lastInput);
 
-        operationStack = enforceOrderOfOperations(operationStack);
-        var result = compute(null, invalidText, operationStack);
-        printToScreen(result);
+        if (verifyStackValidity(operationStack)) {
+            operationStack = enforceOrderOfOperations(operationStack);
+            var result = compute(null, $scope.invalidText, operationStack);
+            printToScreen(result);
+        } else printToScreen($scope.invalidText);
     }
 
     //private
     printToScreen = function (value) {
         clear();
         $scope.screen = $scope.screen + value;
+    }
+
+    verifyStackValidity = function(operationStack){
+        for (var i = 0; i < operationStack.length -1; i++){
+            var current = operationStack[i];
+            var next = operationStack[i+1];
+            switch (true){
+                //** or ++ or -- or //
+                case isOperator(current) && isOperator(next):
+                    return false;
+                //(+ or (* or (- or (/ or *) or +) or -) or /)
+                case (current == $scope.parenthesisLeftValue && isOperator(next)) || next == $scope.parenthesisRightValue && isOperator(current):
+                    return false;
+
+            }
+        }
+        return true;
     }
 
     isolateLastInput = function () {
@@ -134,13 +154,15 @@ function calculatorCtrl($scope, hotkeys) {
 
         switch(true){
             case isOperator(current):
+                //if two operators in a row
+                if (pendingOperator) return $scope.invalidText;
                 pendingOperator = current;
                 return compute(pendingOperator, result, operationStack);
             //else if the operator found is a parenthesis, we need to evaluate what is inside
             case current == $scope.parenthesisLeftValue:
                 operationStack = replaceParenthesisByItsValue(operationStack);
                 //if no right parenthesis was found
-                if (!operationStack) return (invalidText);
+                if (!operationStack) return ($scope.invalidText);
                 //else a matching parenthesis was found and its value has been replaced inside the operationStack
                 else return compute(pendingOperator, result, operationStack);
             //else it is a number
@@ -170,7 +192,7 @@ function calculatorCtrl($scope, hotkeys) {
                 break;
             default:
                 clear();
-                return (invalidText);
+                return ($scope.invalidText);
         }
     }
 
